@@ -8,7 +8,6 @@ engine = create_engine(f"sqlite:///coupons.db")
 
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
-Base.metadata.create_all(bind=engine)
 
 class Coupon(Base):
     __tablename__ = "coupons"
