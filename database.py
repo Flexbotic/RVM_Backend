@@ -1,0 +1,28 @@
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from pydantic import BaseModel
+
+engine = create_engine("sqlite:///coupons.db")
+
+SessionLocal = sessionmaker(bind=engine)
+Base = declarative_base()
+Base.metadata.create_all(bind=engine)
+
+class Coupon(Base):
+    __tablename__ = "coupons"
+    id = Column(Integer, primary_key=True, index=True)
+    barcode = Column(String, unique=True, index=True)
+    amount = Column(Float)
+
+class CouponCreate(BaseModel):
+    barcode: str
+    amount: float
+    
+class CouponOut(BaseModel):
+    id: int
+    barcode: str
+    amount: float
+
+    class Config:
+        from_attributes = True
