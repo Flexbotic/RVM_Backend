@@ -5,8 +5,8 @@ from pydantic import BaseModel
 import os
 
 db_dir = os.getenv("DATABASE_PATH", "/data")
-os.makedirs(db_dir, exist_ok=True)
 db_path = os.path.join(db_dir, "coupons.db")
+
 engine = create_engine(f"sqlite:///{db_path}")
 
 SessionLocal = sessionmaker(bind=engine)
