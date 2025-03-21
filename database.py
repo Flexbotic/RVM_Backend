@@ -2,8 +2,10 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel
+import os
 
-engine = create_engine("sqlite:///coupons.db")
+db_path = os.path.join(os.getenv("DATABASE_PATH", "."), "coupons.db")
+engine = create_engine(f"sqlite:///{db_path}")
 
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
