@@ -4,13 +4,40 @@ from typing import List
 import re
 from database import Coupon, CouponCreate, CouponOut, SessionLocal, Base, engine
 
+from sqlalchemy import create_engine, Column, Integer, String, Float
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from pydantic import BaseModel
+
 API_KEY = "FXXBBAPIK2213"
 
+engine = create_engine(f"sqlite:///coupons.db")
+
+SessionLocal = sessionmaker(bind=engine)
+Base = declarative_base()
+
+class Coupon(Base):
+    __tablename__ = "coupons"
+    id = Column(Integer, primary_key=True, index=True)
+    barcode = Column(String, unique=True, index=True)
+    amount = Column(Float)
+
+class CouponCreate(BaseModel):
+    barcode: str
+    amount: float
+    
+class CouponOut(BaseModel):
+    id: int
+    barcode: str
+    amount: float
+
+    class Config:
+        from_attributes = True
+        
 app = FastAPI()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # To wykona się na starcie
     Base.metadata.create_all(bind=engine)
     yield
 
