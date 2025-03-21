@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Header
 from contextlib import asynccontextmanager
 from typing import List
 import re
-from database import Coupon, CouponCreate, CouponOut, SessionLocal, Base, engine
 
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
