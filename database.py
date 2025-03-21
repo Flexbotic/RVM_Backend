@@ -4,9 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel
 import os
 
-db_path = os.path.join("/data", "coupons.db")
-
-engine = create_engine(f"sqlite:///{db_path}")
+engine = create_engine(f"sqlite:///coupons.db")
 
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
